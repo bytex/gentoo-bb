@@ -1,0 +1,7 @@
+#BUILD_FROM ${NAMESPACE}/${BOB_BUSYBOX_BUILDER}
+FROM scratch
+MAINTAINER ${MAINTAINER}
+
+ADD rootfs.tar /
+
+CMD ["/bin/sh"]

@@ -1,0 +1,20 @@
+FROM ${NAMESPACE}/glibc
+MAINTAINER ${MAINTAINER}
+
+ENV GOSU_VERSION 1.7
+
+ADD rootfs.tar /
+
+ADD etc /etc
+
+RUN wget -O /usr/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" \
+	&& chmod +x /usr/bin/gosu \
+	&& gosu nobody true
+
+VOLUME /var/lib/mysql
+
+COPY docker-entrypoint.sh /usr/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+EXPOSE 3306
+CMD ["mysqld"]
